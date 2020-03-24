@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Alert, Button, Image, TextInput, AppRegistry } from 'react-native';
-
-var FBLoginButton = require('./FBLoginButton');
+import * as Google from 'expo-google-app-auth';
 
 class Hello extends Component {
 	render() {
@@ -20,19 +19,25 @@ export default class MyApp extends Component {
 		this.state = { text: 'Default text'};
 	}
 
+	async googleSignIn() {
+		const { type, accessToken, user } = await Google.logInAsync({
+			clientId: '798194073310-46u2j7i62dopv0l5jffmb7nubn0stmeu.apps.googleusercontent.com',
+		});
+		console.log(accessToken)
+	}
+
 	render() {
 		return (
 			// VIEW = BODY (Tout doit être dedans)
 			// button = BOUTON (method onPress = action au click)
 			// Image = Images (lien ou source)
 	    	<View style={styles.container}>
-					<Text style={styles.label}>Welcome to the Facebook SDK for React Native!</Text>
-					<FBLoginButton />
+					<Text style={styles.label}>Welcome to the test app!</Text>
 					<Hello name="Maxime"/>
 		      <Text id="montext" style={{fontSize: 20}}>{this.state.text}</Text>
 					<Button
 	        title="Press me"
-	        onPress={() => Alert.alert('jai appuyé')}
+					onPress={this.googleSignIn}
 	      />
 				<Image
           style={{width: 100, height: 100}}
